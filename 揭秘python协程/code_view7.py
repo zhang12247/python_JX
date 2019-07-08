@@ -1,12 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 
 def main():
     url = "http://movie.douban.com/cinema/later/beijing/"
     init_page = requests.get(url).content
     init_soup = BeautifulSoup(init_page, "lxml")
-    print(init_soup)
 
     all_movies = init_soup.find("div", id="showing-soon")
     for each_movie in all_movies.find_all("div", class_="item"):
@@ -24,4 +24,9 @@ def main():
         print("{} {} {}".format(movie_name, movie_date, img_tag["src"]))
 
 if __name__ == '__main__':
+    print("-------begin--------")
+    start = time.perf_counter()
     main()
+    end = time.perf_counter()
+    print("-------end--------")
+    print("wall time:{}", end - start)
